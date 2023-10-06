@@ -1,0 +1,1762 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf05octwellanalysis"
+		},
+		"csv_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'csv'"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/csv')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "all csv files",
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('csv_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Chemicals')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "csv",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "CHEMICALS.csv",
+						"container": "input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "API Number",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Ingredient Name",
+						"type": "String"
+					},
+					{
+						"name": "CAS Number",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Trade Name",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Supplier",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Purpose Group",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Percent HF Job Scaled",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Ingredient Mass (Thousand Pounds)",
+						"type": "String"
+					},
+					{
+						"name": "Frac Focus Registry ID",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job End Date",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job ID",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Order",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Start Date",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Ingredient Order",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Purpose",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Supplier Group",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Ingredient Count",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Ingredient Mass",
+						"type": "String"
+					},
+					{
+						"name": "Chemical Trade Name Count",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Base Water Mass Avg",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Base Water Volume Avg",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Count",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Percent Additive",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "csv",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "WELLHEADER.csv",
+						"container": "input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "API Number",
+						"type": "String"
+					},
+					{
+						"name": "Well Name",
+						"type": "String"
+					},
+					{
+						"name": "Texas District",
+						"type": "String"
+					},
+					{
+						"name": "Lease Name",
+						"type": "String"
+					},
+					{
+						"name": "Lease Number",
+						"type": "String"
+					},
+					{
+						"name": "Number of Wells in Lease",
+						"type": "String"
+					},
+					{
+						"name": "Formation",
+						"type": "String"
+					},
+					{
+						"name": "Field",
+						"type": "String"
+					},
+					{
+						"name": "Well Direction",
+						"type": "String"
+					},
+					{
+						"name": "Well Type",
+						"type": "String"
+					},
+					{
+						"name": "Spud Date",
+						"type": "String"
+					},
+					{
+						"name": "Completion Date",
+						"type": "String"
+					},
+					{
+						"name": "Initial Test Date",
+						"type": "String"
+					},
+					{
+						"name": "Production Start Date",
+						"type": "String"
+					},
+					{
+						"name": "Peak Production Date",
+						"type": "String"
+					},
+					{
+						"name": "Permit Issue Date",
+						"type": "String"
+					},
+					{
+						"name": "Last Production Date",
+						"type": "String"
+					},
+					{
+						"name": "Refracturing Date",
+						"type": "String"
+					},
+					{
+						"name": "Well Status",
+						"type": "String"
+					},
+					{
+						"name": "Last Update Date",
+						"type": "String"
+					},
+					{
+						"name": "Frac Focus Version",
+						"type": "String"
+					},
+					{
+						"name": "Pad ID",
+						"type": "String"
+					},
+					{
+						"name": "Reported Production Months",
+						"type": "String"
+					},
+					{
+						"name": "Reported Well Type",
+						"type": "String"
+					},
+					{
+						"name": "First Record Date",
+						"type": "String"
+					},
+					{
+						"name": "Number of Casing Strings Group",
+						"type": "String"
+					},
+					{
+						"name": "Number of Casing Strings Category",
+						"type": "String"
+					},
+					{
+						"name": "Pad State",
+						"type": "String"
+					},
+					{
+						"name": "Parent Child Classification",
+						"type": "String"
+					},
+					{
+						"name": "Pad Sequence Completion",
+						"type": "String"
+					},
+					{
+						"name": "Pad Segment Completion",
+						"type": "String"
+					},
+					{
+						"name": "Pad Sequence Spud",
+						"type": "String"
+					},
+					{
+						"name": "Pad Segment Spud",
+						"type": "String"
+					},
+					{
+						"name": "Land Type",
+						"type": "String"
+					},
+					{
+						"name": "Choke Size",
+						"type": "String"
+					},
+					{
+						"name": "Well Spacing",
+						"type": "String"
+					},
+					{
+						"name": "Longitude",
+						"type": "String"
+					},
+					{
+						"name": "Latitude",
+						"type": "String"
+					},
+					{
+						"name": "Reported 24-h Test Water Production",
+						"type": "String"
+					},
+					{
+						"name": "Reported 24-h Test Production",
+						"type": "String"
+					},
+					{
+						"name": "Maximum Treatment Pressure",
+						"type": "String"
+					},
+					{
+						"name": "Maximum Treatment Rate",
+						"type": "String"
+					},
+					{
+						"name": "Proppant (Thousand pounds)",
+						"type": "String"
+					},
+					{
+						"name": "Ground Level",
+						"type": "String"
+					},
+					{
+						"name": "Total Measured Depth",
+						"type": "String"
+					},
+					{
+						"name": "True Vertical Depth",
+						"type": "String"
+					},
+					{
+						"name": "Lateral Length",
+						"type": "String"
+					},
+					{
+						"name": "Drilling Days",
+						"type": "String"
+					},
+					{
+						"name": "Frac Stages (Count)",
+						"type": "String"
+					},
+					{
+						"name": "BottomHole Longitude",
+						"type": "String"
+					},
+					{
+						"name": "BottomHole Latitude",
+						"type": "String"
+					},
+					{
+						"name": "Surface Lateral Projection",
+						"type": "String"
+					},
+					{
+						"name": "Upper Perforation",
+						"type": "String"
+					},
+					{
+						"name": "Lower Perforation",
+						"type": "String"
+					},
+					{
+						"name": "Perforated Length",
+						"type": "String"
+					},
+					{
+						"name": "Distance Closest Well 2D (Feet)",
+						"type": "String"
+					},
+					{
+						"name": "Distance Closest Well 3D (Feet)",
+						"type": "String"
+					},
+					{
+						"name": "FK_NASGeography",
+						"type": "String"
+					},
+					{
+						"name": "FK_NASOperator",
+						"type": "String"
+					},
+					{
+						"name": "RE ID",
+						"type": "String"
+					},
+					{
+						"name": "Asset",
+						"type": "String"
+					},
+					{
+						"name": "FK_NASDataQuality",
+						"type": "String"
+					},
+					{
+						"name": "Light Oil Content Group",
+						"type": "String"
+					},
+					{
+						"name": "Light Oil Content Category",
+						"type": "String"
+					},
+					{
+						"name": "Light Oil Content Detail",
+						"type": "String"
+					},
+					{
+						"name": "Initial Production Group",
+						"type": "String"
+					},
+					{
+						"name": "Initial Production Category",
+						"type": "String"
+					},
+					{
+						"name": "Initial Production Detail",
+						"type": "String"
+					},
+					{
+						"name": "FK_NASREAnalysis",
+						"type": "String"
+					},
+					{
+						"name": "Spud Date Reporting Group",
+						"type": "String"
+					},
+					{
+						"name": "Completion Date Reporting Group",
+						"type": "String"
+					},
+					{
+						"name": "Production Start Date Reporting Group",
+						"type": "String"
+					},
+					{
+						"name": "TVD Group",
+						"type": "String"
+					},
+					{
+						"name": "TVD Category",
+						"type": "String"
+					},
+					{
+						"name": "TVD Detail",
+						"type": "String"
+					},
+					{
+						"name": "Well Origin",
+						"type": "String"
+					},
+					{
+						"name": "TMD Group",
+						"type": "String"
+					},
+					{
+						"name": "TMD Category",
+						"type": "String"
+					},
+					{
+						"name": "TMD Detail",
+						"type": "String"
+					},
+					{
+						"name": "Lateral Length Group",
+						"type": "String"
+					},
+					{
+						"name": "Lateral Length Category",
+						"type": "String"
+					},
+					{
+						"name": "Lateral Length Detail",
+						"type": "String"
+					},
+					{
+						"name": "Service Provider",
+						"type": "String"
+					},
+					{
+						"name": "Service Provider Confidence",
+						"type": "String"
+					},
+					{
+						"name": "Initial Light Oil Content Group",
+						"type": "String"
+					},
+					{
+						"name": "Initial Light Oil Content Category",
+						"type": "String"
+					},
+					{
+						"name": "Initial Light Oil Content Detail",
+						"type": "String"
+					},
+					{
+						"name": "FK_NASBreakevenOilPrice",
+						"type": "String"
+					},
+					{
+						"name": "FK_NASBreakevenGasPrice",
+						"type": "String"
+					},
+					{
+						"name": "API Group",
+						"type": "String"
+					},
+					{
+						"name": "API Category",
+						"type": "String"
+					},
+					{
+						"name": "API Detail",
+						"type": "String"
+					},
+					{
+						"name": "Gas Gatherer",
+						"type": "String"
+					},
+					{
+						"name": "Liquids Gatherer",
+						"type": "String"
+					},
+					{
+						"name": "Proppant Type Group",
+						"type": "String"
+					},
+					{
+						"name": "Proppant Type Category",
+						"type": "String"
+					},
+					{
+						"name": "Proppant Type Detail",
+						"type": "String"
+					},
+					{
+						"name": "Life Cycle Group",
+						"type": "String"
+					},
+					{
+						"name": "Life Cycle Category",
+						"type": "String"
+					},
+					{
+						"name": "Life Cycle Detail",
+						"type": "String"
+					},
+					{
+						"name": "Acreage Grade Group",
+						"type": "String"
+					},
+					{
+						"name": "Acreage Grade Category",
+						"type": "String"
+					},
+					{
+						"name": "Acreage Grade Detail",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Type Group",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Type Category",
+						"type": "String"
+					},
+					{
+						"name": "Frac Job Type Detail",
+						"type": "String"
+					},
+					{
+						"name": "Proppant Intensity Group",
+						"type": "String"
+					},
+					{
+						"name": "Proppant Intensity Category",
+						"type": "String"
+					},
+					{
+						"name": "Proppant Intensity Detail",
+						"type": "String"
+					},
+					{
+						"name": "Fluid Intensity Group",
+						"type": "String"
+					},
+					{
+						"name": "Fluid Intensity Category",
+						"type": "String"
+					},
+					{
+						"name": "Fluid Intensity Detail",
+						"type": "String"
+					},
+					{
+						"name": "FK_NASLocation",
+						"type": "String"
+					},
+					{
+						"name": "Distance 3D Group",
+						"type": "String"
+					},
+					{
+						"name": "Distance 3D Category",
+						"type": "String"
+					},
+					{
+						"name": "Distance 3D Detail",
+						"type": "String"
+					},
+					{
+						"name": "Days Since Frac Spread On Location",
+						"type": "String"
+					},
+					{
+						"name": "Days Since Rig On Location",
+						"type": "String"
+					},
+					{
+						"name": "Drilling Contractor",
+						"type": "String"
+					},
+					{
+						"name": "First Reported Operator",
+						"type": "String"
+					},
+					{
+						"name": "Implied Wells Per Section",
+						"type": "String"
+					},
+					{
+						"name": "Landing Zone ID",
+						"type": "String"
+					},
+					{
+						"name": "Latest Reported Operator Change Date",
+						"type": "String"
+					},
+					{
+						"name": "Liquid Injection Type",
+						"type": "String"
+					},
+					{
+						"name": "Parent Child Classification Spacing Unit",
+						"type": "String"
+					},
+					{
+						"name": "Permit Number",
+						"type": "String"
+					},
+					{
+						"name": "Previous Reported Operator",
+						"type": "String"
+					},
+					{
+						"name": "Production Method",
+						"type": "String"
+					},
+					{
+						"name": "Reported Well Status",
+						"type": "String"
+					},
+					{
+						"name": "Spacing Unit ID",
+						"type": "String"
+					},
+					{
+						"name": "Spacing Unit Name",
+						"type": "String"
+					},
+					{
+						"name": "Spacing Unit Segment",
+						"type": "String"
+					},
+					{
+						"name": "Spacing Unit Sequence",
+						"type": "String"
+					},
+					{
+						"name": "Spacing Unit Size",
+						"type": "String"
+					},
+					{
+						"name": "Stimulation End Date",
+						"type": "String"
+					},
+					{
+						"name": "Stimulation Start Date",
+						"type": "String"
+					},
+					{
+						"name": "Total Depth Date",
+						"type": "String"
+					},
+					{
+						"name": "Wells Per Landing Zone",
+						"type": "String"
+					},
+					{
+						"name": "Zipper Frac Completion",
+						"type": "String"
+					},
+					{
+						"name": "Zones Per Spacing Unit",
+						"type": "String"
+					},
+					{
+						"name": "Completion Date Reporting Category",
+						"type": "String"
+					},
+					{
+						"name": "Stimulation End Date Reporting Group",
+						"type": "String"
+					},
+					{
+						"name": "Stimulation Start Date Reporting Group",
+						"type": "String"
+					},
+					{
+						"name": "Estimated Well Gas Hyperbolic Factor",
+						"type": "String"
+					},
+					{
+						"name": "Estimated Well Oil Hyperbolic Factor",
+						"type": "String"
+					},
+					{
+						"name": "Estimated Well Gas Initial Decline",
+						"type": "String"
+					},
+					{
+						"name": "Estimated Well Oil Initial Decline",
+						"type": "String"
+					},
+					{
+						"name": "Estimated Well Gas Peak Production",
+						"type": "String"
+					},
+					{
+						"name": "Estimated Well Oil Peak Production",
+						"type": "String"
+					},
+					{
+						"name": "Frac Spread Latest Location",
+						"type": "String"
+					},
+					{
+						"name": "Gun Barrel View Offset",
+						"type": "String"
+					},
+					{
+						"name": "HH Gas Breakeven Full Cycle",
+						"type": "String"
+					},
+					{
+						"name": "HH Gas Breakeven Go Forward",
+						"type": "String"
+					},
+					{
+						"name": "Horizontal Spacing",
+						"type": "String"
+					},
+					{
+						"name": "HorsepowerHours",
+						"type": "String"
+					},
+					{
+						"name": "Injection Zone Bottom",
+						"type": "String"
+					},
+					{
+						"name": "Injection Zone Top",
+						"type": "String"
+					},
+					{
+						"name": "IRR Wellhead",
+						"type": "String"
+					},
+					{
+						"name": "IRR",
+						"type": "String"
+					},
+					{
+						"name": "Max Authorized Injection Pressure",
+						"type": "String"
+					},
+					{
+						"name": "Max Authorized Liquid Injection Rate",
+						"type": "String"
+					},
+					{
+						"name": "NPV Wellhead",
+						"type": "String"
+					},
+					{
+						"name": "NPV",
+						"type": "String"
+					},
+					{
+						"name": "Rigs Latest Location",
+						"type": "String"
+					},
+					{
+						"name": "Stimulation Days",
+						"type": "String"
+					},
+					{
+						"name": "Vertical Spacing Lower",
+						"type": "String"
+					},
+					{
+						"name": "Vertical Spacing Upper",
+						"type": "String"
+					},
+					{
+						"name": "WTI Breakeven Full Cycle",
+						"type": "String"
+					},
+					{
+						"name": "WTI Breakeven Go Forward",
+						"type": "String"
+					},
+					{
+						"name": "Fracturing Liquid Volume",
+						"type": "String"
+					},
+					{
+						"name": "Open Hole Completion",
+						"type": "String"
+					},
+					{
+						"name": "Original Formation",
+						"type": "String"
+					},
+					{
+						"name": "Target Formation Source",
+						"type": "String"
+					},
+					{
+						"name": "Target Formation Source Confidence",
+						"type": "String"
+					},
+					{
+						"name": "Contact Address",
+						"type": "String"
+					},
+					{
+						"name": "Contact City",
+						"type": "String"
+					},
+					{
+						"name": "Contact State",
+						"type": "String"
+					},
+					{
+						"name": "Contact Zip Code",
+						"type": "String"
+					},
+					{
+						"name": "Last Irregularity Year - Month",
+						"type": "String"
+					},
+					{
+						"name": "Mesh Size Confidence",
+						"type": "String"
+					},
+					{
+						"name": "Mesh Size Detail",
+						"type": "String"
+					},
+					{
+						"name": "Sand Type Confidence",
+						"type": "String"
+					},
+					{
+						"name": "Sand Type Detail",
+						"type": "String"
+					},
+					{
+						"name": "Average API Gravity",
+						"type": "String"
+					},
+					{
+						"name": "Distance Closest Well 2D",
+						"type": "String"
+					},
+					{
+						"name": "Distance Closest Well 3D",
+						"type": "String"
+					},
+					{
+						"name": "Drilling Days Sum",
+						"type": "String"
+					},
+					{
+						"name": "End Frac to Production Time",
+						"type": "String"
+					},
+					{
+						"name": "Fluid per Foot",
+						"type": "String"
+					},
+					{
+						"name": "FracStageCount",
+						"type": "String"
+					},
+					{
+						"name": "Fracturing Liquid Volume Sum",
+						"type": "String"
+					},
+					{
+						"name": "HorizontalSpacing",
+						"type": "String"
+					},
+					{
+						"name": "HorsepowerHours Sum",
+						"type": "String"
+					},
+					{
+						"name": "Irregularity Recovery Ratio",
+						"type": "String"
+					},
+					{
+						"name": "MaxAuthorizedInjectionPressure",
+						"type": "String"
+					},
+					{
+						"name": "MaxAuthorizedLiquidInjectionRate",
+						"type": "String"
+					},
+					{
+						"name": "Permit to Production Time",
+						"type": "String"
+					},
+					{
+						"name": "Permit to Spud Time",
+						"type": "String"
+					},
+					{
+						"name": "Spud to Completion Time",
+						"type": "String"
+					},
+					{
+						"name": "Spud to Production Time",
+						"type": "String"
+					},
+					{
+						"name": "Spud to Start-Up Time",
+						"type": "String"
+					},
+					{
+						"name": "Spud to TD Time",
+						"type": "String"
+					},
+					{
+						"name": "Start Frac to End Frac Time",
+						"type": "String"
+					},
+					{
+						"name": "Start Frac to Production Time",
+						"type": "String"
+					},
+					{
+						"name": "String Bottom",
+						"type": "String"
+					},
+					{
+						"name": "String Cement Use",
+						"type": "String"
+					},
+					{
+						"name": "String Diameter Total",
+						"type": "String"
+					},
+					{
+						"name": "String Top",
+						"type": "String"
+					},
+					{
+						"name": "TD to Production Time",
+						"type": "String"
+					},
+					{
+						"name": "TD to Start Frac Time",
+						"type": "String"
+					},
+					{
+						"name": "VerticalSpacingLower",
+						"type": "String"
+					},
+					{
+						"name": "VerticalSpacingUpper",
+						"type": "String"
+					},
+					{
+						"name": "Lease Serial Number",
+						"type": "String"
+					},
+					{
+						"name": "Lease Agency Name",
+						"type": "String"
+					},
+					{
+						"name": "Lease Authorization Date",
+						"type": "String"
+					},
+					{
+						"name": "Spud Date Reporting Category",
+						"type": "String"
+					},
+					{
+						"name": "Frac Fluid Model",
+						"type": "String"
+					},
+					{
+						"name": "Proppant Model",
+						"type": "String"
+					},
+					{
+						"name": "Land Type Group",
+						"type": "String"
+					},
+					{
+						"name": "Land Type Category",
+						"type": "String"
+					},
+					{
+						"name": "Mineral Rights Type",
+						"type": "String"
+					},
+					{
+						"name": "Simul Frac Completion",
+						"type": "String"
+					},
+					{
+						"name": "Wellhead Breakeven Oil Price",
+						"type": "String"
+					},
+					{
+						"name": "Wellhead Breakeven Gas Price",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "csv",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "output"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProductionFlaring')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "csv",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "PRODUCTIONFLARING.csv",
+						"container": "input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "API Number",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Month",
+						"type": "String"
+					},
+					{
+						"name": "FlaredGas_MCf",
+						"type": "String"
+					},
+					{
+						"name": "GrossGasProduction_MCf",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/chemprod')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "csv",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "output"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/production')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "csv",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "PRODUCTION.csv",
+						"container": "input"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Id",
+						"type": "String"
+					},
+					{
+						"name": "API Number",
+						"type": "String"
+					},
+					{
+						"name": "Year",
+						"type": "String"
+					},
+					{
+						"name": "Month",
+						"type": "String"
+					},
+					{
+						"name": "OilAndGasGroup",
+						"type": "String"
+					},
+					{
+						"name": "Production",
+						"type": "String"
+					},
+					{
+						"name": "CumulativeCalendarMonths",
+						"type": "String"
+					},
+					{
+						"name": "CumulativeCalendarYears",
+						"type": "String"
+					},
+					{
+						"name": "Production Phase",
+						"type": "String"
+					},
+					{
+						"name": "Production Forecast Group",
+						"type": "String"
+					},
+					{
+						"name": "OilAndGasCategory",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/csv')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "ProductionFlaring",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          {API Number} as string,",
+						"          {Well Name} as string,",
+						"          {Texas District} as string,",
+						"          {Lease Name} as string,",
+						"          {Lease Number} as string,",
+						"          {Number of Wells in Lease} as string,",
+						"          Formation as string,",
+						"          Field as string,",
+						"          {Well Direction} as string,",
+						"          {Well Type} as string,",
+						"          {Spud Date} as string,",
+						"          {Completion Date} as string,",
+						"          {Initial Test Date} as string,",
+						"          {Production Start Date} as string,",
+						"          {Peak Production Date} as string,",
+						"          {Permit Issue Date} as string,",
+						"          {Last Production Date} as string,",
+						"          {Refracturing Date} as string,",
+						"          {Well Status} as string,",
+						"          {Last Update Date} as string,",
+						"          {Frac Focus Version} as string,",
+						"          {Pad ID} as string,",
+						"          {Reported Production Months} as string,",
+						"          {Reported Well Type} as string,",
+						"          {First Record Date} as string,",
+						"          {Number of Casing Strings Group} as string,",
+						"          {Number of Casing Strings Category} as string,",
+						"          {Pad State} as string,",
+						"          {Parent Child Classification} as string,",
+						"          {Pad Sequence Completion} as string,",
+						"          {Pad Segment Completion} as string,",
+						"          {Pad Sequence Spud} as string,",
+						"          {Pad Segment Spud} as string,",
+						"          {Land Type} as string,",
+						"          {Choke Size} as string,",
+						"          {Well Spacing} as string,",
+						"          Longitude as string,",
+						"          Latitude as string,",
+						"          {Reported 24-h Test Water Production} as string,",
+						"          {Reported 24-h Test Production} as string,",
+						"          {Maximum Treatment Pressure} as string,",
+						"          {Maximum Treatment Rate} as string,",
+						"          {Proppant (Thousand pounds)} as string,",
+						"          {Ground Level} as string,",
+						"          {Total Measured Depth} as string,",
+						"          {True Vertical Depth} as string,",
+						"          {Lateral Length} as string,",
+						"          {Drilling Days} as string,",
+						"          {Frac Stages (Count)} as string,",
+						"          {BottomHole Longitude} as string,",
+						"          {BottomHole Latitude} as string,",
+						"          {Surface Lateral Projection} as string,",
+						"          {Upper Perforation} as string,",
+						"          {Lower Perforation} as string,",
+						"          {Perforated Length} as string,",
+						"          {Distance Closest Well 2D (Feet)} as string,",
+						"          {Distance Closest Well 3D (Feet)} as string,",
+						"          FK_NASGeography as string,",
+						"          FK_NASOperator as string,",
+						"          {RE ID} as string,",
+						"          Asset as string,",
+						"          FK_NASDataQuality as string,",
+						"          {Light Oil Content Group} as string,",
+						"          {Light Oil Content Category} as string,",
+						"          {Light Oil Content Detail} as string,",
+						"          {Initial Production Group} as string,",
+						"          {Initial Production Category} as string,",
+						"          {Initial Production Detail} as string,",
+						"          FK_NASREAnalysis as string,",
+						"          {Spud Date Reporting Group} as string,",
+						"          {Completion Date Reporting Group} as string,",
+						"          {Production Start Date Reporting Group} as string,",
+						"          {TVD Group} as string,",
+						"          {TVD Category} as string,",
+						"          {TVD Detail} as string,",
+						"          {Well Origin} as string,",
+						"          {TMD Group} as string,",
+						"          {TMD Category} as string,",
+						"          {TMD Detail} as string,",
+						"          {Lateral Length Group} as string,",
+						"          {Lateral Length Category} as string,",
+						"          {Lateral Length Detail} as string,",
+						"          {Service Provider} as string,",
+						"          {Service Provider Confidence} as string,",
+						"          {Initial Light Oil Content Group} as string,",
+						"          {Initial Light Oil Content Category} as string,",
+						"          {Initial Light Oil Content Detail} as string,",
+						"          FK_NASBreakevenOilPrice as string,",
+						"          FK_NASBreakevenGasPrice as string,",
+						"          {API Group} as string,",
+						"          {API Category} as string,",
+						"          {API Detail} as string,",
+						"          {Gas Gatherer} as string,",
+						"          {Liquids Gatherer} as string,",
+						"          {Proppant Type Group} as string,",
+						"          {Proppant Type Category} as string,",
+						"          {Proppant Type Detail} as string,",
+						"          {Life Cycle Group} as string,",
+						"          {Life Cycle Category} as string,",
+						"          {Life Cycle Detail} as string,",
+						"          {Acreage Grade Group} as string,",
+						"          {Acreage Grade Category} as string,",
+						"          {Acreage Grade Detail} as string,",
+						"          {Frac Job Type Group} as string,",
+						"          {Frac Job Type Category} as string,",
+						"          {Frac Job Type Detail} as string,",
+						"          {Proppant Intensity Group} as string,",
+						"          {Proppant Intensity Category} as string,",
+						"          {Proppant Intensity Detail} as string,",
+						"          {Fluid Intensity Group} as string,",
+						"          {Fluid Intensity Category} as string,",
+						"          {Fluid Intensity Detail} as string,",
+						"          FK_NASLocation as string,",
+						"          {Distance 3D Group} as string,",
+						"          {Distance 3D Category} as string,",
+						"          {Distance 3D Detail} as string,",
+						"          {Days Since Frac Spread On Location} as string,",
+						"          {Days Since Rig On Location} as string,",
+						"          {Drilling Contractor} as string,",
+						"          {First Reported Operator} as string,",
+						"          {Implied Wells Per Section} as string,",
+						"          {Landing Zone ID} as string,",
+						"          {Latest Reported Operator Change Date} as string,",
+						"          {Liquid Injection Type} as string,",
+						"          {Parent Child Classification Spacing Unit} as string,",
+						"          {Permit Number} as string,",
+						"          {Previous Reported Operator} as string,",
+						"          {Production Method} as string,",
+						"          {Reported Well Status} as string,",
+						"          {Spacing Unit ID} as string,",
+						"          {Spacing Unit Name} as string,",
+						"          {Spacing Unit Segment} as string,",
+						"          {Spacing Unit Sequence} as string,",
+						"          {Spacing Unit Size} as string,",
+						"          {Stimulation End Date} as string,",
+						"          {Stimulation Start Date} as string,",
+						"          {Total Depth Date} as string,",
+						"          {Wells Per Landing Zone} as string,",
+						"          {Zipper Frac Completion} as string,",
+						"          {Zones Per Spacing Unit} as string,",
+						"          {Completion Date Reporting Category} as string,",
+						"          {Stimulation End Date Reporting Group} as string,",
+						"          {Stimulation Start Date Reporting Group} as string,",
+						"          {Estimated Well Gas Hyperbolic Factor} as string,",
+						"          {Estimated Well Oil Hyperbolic Factor} as string,",
+						"          {Estimated Well Gas Initial Decline} as string,",
+						"          {Estimated Well Oil Initial Decline} as string,",
+						"          {Estimated Well Gas Peak Production} as string,",
+						"          {Estimated Well Oil Peak Production} as string,",
+						"          {Frac Spread Latest Location} as string,",
+						"          {Gun Barrel View Offset} as string,",
+						"          {HH Gas Breakeven Full Cycle} as string,",
+						"          {HH Gas Breakeven Go Forward} as string,",
+						"          {Horizontal Spacing} as string,",
+						"          HorsepowerHours as string,",
+						"          {Injection Zone Bottom} as string,",
+						"          {Injection Zone Top} as string,",
+						"          {IRR Wellhead} as string,",
+						"          IRR as string,",
+						"          {Max Authorized Injection Pressure} as string,",
+						"          {Max Authorized Liquid Injection Rate} as string,",
+						"          {NPV Wellhead} as string,",
+						"          NPV as string,",
+						"          {Rigs Latest Location} as string,",
+						"          {Stimulation Days} as string,",
+						"          {Vertical Spacing Lower} as string,",
+						"          {Vertical Spacing Upper} as string,",
+						"          {WTI Breakeven Full Cycle} as string,",
+						"          {WTI Breakeven Go Forward} as string,",
+						"          {Fracturing Liquid Volume} as string,",
+						"          {Open Hole Completion} as string,",
+						"          {Original Formation} as string,",
+						"          {Target Formation Source} as string,",
+						"          {Target Formation Source Confidence} as string,",
+						"          {Contact Address} as string,",
+						"          {Contact City} as string,",
+						"          {Contact State} as string,",
+						"          {Contact Zip Code} as string,",
+						"          {Last Irregularity Year - Month} as string,",
+						"          {Mesh Size Confidence} as string,",
+						"          {Mesh Size Detail} as string,",
+						"          {Sand Type Confidence} as string,",
+						"          {Sand Type Detail} as string,",
+						"          {Average API Gravity} as string,",
+						"          {Distance Closest Well 2D} as string,",
+						"          {Distance Closest Well 3D} as string,",
+						"          {Drilling Days Sum} as string,",
+						"          {End Frac to Production Time} as string,",
+						"          {Fluid per Foot} as string,",
+						"          FracStageCount as string,",
+						"          {Fracturing Liquid Volume Sum} as string,",
+						"          HorizontalSpacing as string,",
+						"          {HorsepowerHours Sum} as string,",
+						"          {Irregularity Recovery Ratio} as string,",
+						"          MaxAuthorizedInjectionPressure as string,",
+						"          MaxAuthorizedLiquidInjectionRate as string,",
+						"          {Permit to Production Time} as string,",
+						"          {Permit to Spud Time} as string,",
+						"          {Spud to Completion Time} as string,",
+						"          {Spud to Production Time} as string,",
+						"          {Spud to Start-Up Time} as string,",
+						"          {Spud to TD Time} as string,",
+						"          {Start Frac to End Frac Time} as string,",
+						"          {Start Frac to Production Time} as string,",
+						"          {String Bottom} as string,",
+						"          {String Cement Use} as string,",
+						"          {String Diameter Total} as string,",
+						"          {String Top} as string,",
+						"          {TD to Production Time} as string,",
+						"          {TD to Start Frac Time} as string,",
+						"          VerticalSpacingLower as string,",
+						"          VerticalSpacingUpper as string,",
+						"          {Lease Serial Number} as string,",
+						"          {Lease Agency Name} as string,",
+						"          {Lease Authorization Date} as string,",
+						"          {Spud Date Reporting Category} as string,",
+						"          {Frac Fluid Model} as string,",
+						"          {Proppant Model} as string,",
+						"          {Land Type Group} as string,",
+						"          {Land Type Category} as string,",
+						"          {Mineral Rights Type} as string,",
+						"          {Simul Frac Completion} as string,",
+						"          {Wellhead Breakeven Oil Price} as string,",
+						"          {Wellhead Breakeven Gas Price} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source(output(",
+						"          Id as string,",
+						"          {API Number} as string,",
+						"          Year as string,",
+						"          Month as string,",
+						"          FlaredGas_MCf as string,",
+						"          GrossGasProduction_MCf as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source2",
+						"source1, source2 join(source1@{API Number} == source2@{API Number},",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/ProductionFlaring')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Chemicals",
+								"type": "DatasetReference"
+							},
+							"name": "chemicals"
+						},
+						{
+							"dataset": {
+								"referenceName": "production",
+								"type": "DatasetReference"
+							},
+							"name": "production"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "chemprod",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          {API Number} as string,",
+						"          {Chemical Ingredient Name} as string,",
+						"          {CAS Number} as string,",
+						"          {Chemical Trade Name} as string,",
+						"          {Chemical Supplier} as string,",
+						"          {Chemical Purpose Group} as string,",
+						"          {Frac Job Percent HF Job Scaled} as string,",
+						"          {Chemical Ingredient Mass (Thousand Pounds)} as string,",
+						"          {Frac Focus Registry ID} as string,",
+						"          {Frac Job End Date} as string,",
+						"          {Frac Job ID} as string,",
+						"          {Frac Job Order} as string,",
+						"          {Frac Job Start Date} as string,",
+						"          {Chemical Ingredient Order} as string,",
+						"          {Chemical Purpose} as string,",
+						"          {Chemical Supplier Group} as string,",
+						"          {Chemical Ingredient Count} as string,",
+						"          {Chemical Ingredient Mass} as string,",
+						"          {Chemical Trade Name Count} as string,",
+						"          {Frac Job Base Water Mass Avg} as string,",
+						"          {Frac Job Base Water Volume Avg} as string,",
+						"          {Frac Job Count} as string,",
+						"          {Frac Job Percent Additive} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> chemicals",
+						"source(output(",
+						"          Id as string,",
+						"          {API Number} as string,",
+						"          Year as string,",
+						"          Month as string,",
+						"          OilAndGasGroup as string,",
+						"          Production as string,",
+						"          CumulativeCalendarMonths as string,",
+						"          CumulativeCalendarYears as string,",
+						"          {Production Phase} as string,",
+						"          {Production Forecast Group} as string,",
+						"          OilAndGasCategory as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> production",
+						"chemicals, production join(chemicals@{API Number} == production@{API Number},",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Chemicals')]",
+				"[concat(variables('factoryId'), '/datasets/production')]",
+				"[concat(variables('factoryId'), '/datasets/chemprod')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-10-05T05:43:43Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow2",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"chemicals": {},
+									"production": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-10-06T04:16:23Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
+			]
+		}
+	]
+}
