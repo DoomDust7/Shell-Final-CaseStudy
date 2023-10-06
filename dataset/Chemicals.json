@@ -1,0 +1,121 @@
+{
+	"name": "Chemicals",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "csv",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "CHEMICALS.csv",
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Id",
+				"type": "String"
+			},
+			{
+				"name": "API Number",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Ingredient Name",
+				"type": "String"
+			},
+			{
+				"name": "CAS Number",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Trade Name",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Supplier",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Purpose Group",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job Percent HF Job Scaled",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Ingredient Mass (Thousand Pounds)",
+				"type": "String"
+			},
+			{
+				"name": "Frac Focus Registry ID",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job End Date",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job ID",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job Order",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job Start Date",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Ingredient Order",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Purpose",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Supplier Group",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Ingredient Count",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Ingredient Mass",
+				"type": "String"
+			},
+			{
+				"name": "Chemical Trade Name Count",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job Base Water Mass Avg",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job Base Water Volume Avg",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job Count",
+				"type": "String"
+			},
+			{
+				"name": "Frac Job Percent Additive",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

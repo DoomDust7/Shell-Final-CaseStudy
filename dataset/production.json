@@ -1,0 +1,69 @@
+{
+	"name": "production",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "csv",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "PRODUCTION.csv",
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Id",
+				"type": "String"
+			},
+			{
+				"name": "API Number",
+				"type": "String"
+			},
+			{
+				"name": "Year",
+				"type": "String"
+			},
+			{
+				"name": "Month",
+				"type": "String"
+			},
+			{
+				"name": "OilAndGasGroup",
+				"type": "String"
+			},
+			{
+				"name": "Production",
+				"type": "String"
+			},
+			{
+				"name": "CumulativeCalendarMonths",
+				"type": "String"
+			},
+			{
+				"name": "CumulativeCalendarYears",
+				"type": "String"
+			},
+			{
+				"name": "Production Phase",
+				"type": "String"
+			},
+			{
+				"name": "Production Forecast Group",
+				"type": "String"
+			},
+			{
+				"name": "OilAndGasCategory",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

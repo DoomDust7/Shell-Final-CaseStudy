@@ -1,0 +1,94 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Chemicals",
+						"type": "DatasetReference"
+					},
+					"name": "chemicals"
+				},
+				{
+					"dataset": {
+						"referenceName": "production",
+						"type": "DatasetReference"
+					},
+					"name": "production"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "chemprod",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Id as string,",
+				"          {API Number} as string,",
+				"          {Chemical Ingredient Name} as string,",
+				"          {CAS Number} as string,",
+				"          {Chemical Trade Name} as string,",
+				"          {Chemical Supplier} as string,",
+				"          {Chemical Purpose Group} as string,",
+				"          {Frac Job Percent HF Job Scaled} as string,",
+				"          {Chemical Ingredient Mass (Thousand Pounds)} as string,",
+				"          {Frac Focus Registry ID} as string,",
+				"          {Frac Job End Date} as string,",
+				"          {Frac Job ID} as string,",
+				"          {Frac Job Order} as string,",
+				"          {Frac Job Start Date} as string,",
+				"          {Chemical Ingredient Order} as string,",
+				"          {Chemical Purpose} as string,",
+				"          {Chemical Supplier Group} as string,",
+				"          {Chemical Ingredient Count} as string,",
+				"          {Chemical Ingredient Mass} as string,",
+				"          {Chemical Trade Name Count} as string,",
+				"          {Frac Job Base Water Mass Avg} as string,",
+				"          {Frac Job Base Water Volume Avg} as string,",
+				"          {Frac Job Count} as string,",
+				"          {Frac Job Percent Additive} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> chemicals",
+				"source(output(",
+				"          Id as string,",
+				"          {API Number} as string,",
+				"          Year as string,",
+				"          Month as string,",
+				"          OilAndGasGroup as string,",
+				"          Production as string,",
+				"          CumulativeCalendarMonths as string,",
+				"          CumulativeCalendarYears as string,",
+				"          {Production Phase} as string,",
+				"          {Production Forecast Group} as string,",
+				"          OilAndGasCategory as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> production",
+				"chemicals, production join(chemicals@{API Number} == production@{API Number},",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
